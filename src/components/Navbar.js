@@ -8,7 +8,7 @@ const Navbar = () => {
   return (
     <Stack direction="row" justifyContent="none" sx={{ gap: { sm: '122px', xs: '40px'}, mt: { sm: '32px', xs: '20px'}}} px='20px' >{/* mt => margin top */}
       <Link to="/">
-        <img src={logo} alt="logo" style={{ width: '150px', height: '70px', margin: '0 10px'}} />
+        <img src={logo} alt="logo" style={{ width: '120px', height: '120px', margin: '0 10px', mixBlendMode:'multiply'}} />
       </Link>
       <Stack
         direction="row"
