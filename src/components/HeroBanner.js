@@ -8,7 +8,7 @@ const HeroBanner = () => {
     <Box sx={{
       mt: { lg: '212px', xs: '70px'},
       ml: { sm: '50px'}
-    }} position="relative" p="20px">
+    }} position="relative" p="10px">
       <Typography color="#FF2625" fontWeight="600" fontSize="35px">
         BStrong
       </Typography>
@@ -32,8 +32,15 @@ const HeroBanner = () => {
       >
         Exercise
       </Typography>
-      <img src={HeroBannerImage} alt="banner" 
-      className='hero-banner-img'/>
+     <img
+      
+      src={HeroBannerImage}
+      alt="banner"
+      className='hero-banner-img'
+      style={{ width: '80%', maxWidth: '40%', maxHeight:'700px' , margin: '1px  auto' }}
+      />
+
+
     </Box>
   )
 }
