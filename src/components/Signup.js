@@ -1,110 +1,114 @@
 import React, { useState } from "react";
-import "bootstrap/dist/css/bootstrap.min.css";
-import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
+import {
+  Box,
+  Typography,
+  TextField,
+  Button,
+} from "@mui/material";
+import axios from "axios";
 
-function Signup() {
+function Signup({ handleLogin }) {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
   const [errorMessage, setErrorMessage] = useState("");
 
-  const handleSubmit = async (e) => {
+  axios.defaults.withCredentials = true;
+
+  const handleSubmit = (e) => {
     e.preventDefault();
-
-    if (!name || !email || !password) {
-      setErrorMessage("Please fill in all fields.");
-      return;
-    }
-
-    try {
-      const data = { name, email, password };
-      const response = await fetch("http://localhost:3001/register", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-        credentials: "include", // Include credentials in the request
+    axios
+      .post("http://localhost:3001/register", { name, email, password })
+      .then((res) => {
+        if (res.data.Status === "Success") {
+          handleLogin();
+          navigate("/Home");
+        }
+      })
+      .catch((err) => {
+        setErrorMessage("Registration failed. Please try again.");
+        console.error(err);
       });
-
-      if (response.ok) {
-        navigate("/login");
-      } else {
-        const errorData = await response.json();
-        setErrorMessage(errorData.message || "Registration failed. Please try again.");
-      }
-    } catch (err) {
-      console.error(err);
-      setErrorMessage("Registration failed. Please try again.");
-    }
   };
 
   return (
-    <div className="d-flex justify-content-center align-items-center bg-secondary vh-100 bg-" >
-      <div className="bg-white p-3 rounded w-25">
-        <h2>Register</h2>
+    <Box
+      display="flex"
+      justifyContent="center"
+      alignItems="center"
+      minHeight="80vh"
+  
+    >
+      <Box
+        bgcolor="white"
+        p={3}
+        borderRadius={0}
+        width="40%"
+        textAlign="center"
+        boxShadow={3}
+      >
+        <Typography variant="h4" gutterBottom>
+          Register
+        </Typography>
         {errorMessage && (
-          <div className="alert alert-danger" role="alert">
+          <Typography variant="body2" color="error" gutterBottom>
             {errorMessage}
-          </div>
+          </Typography>
         )}
         <form onSubmit={handleSubmit}>
-        <div className="mb-3">
-            <label htmlFor="name">
-              <strong>Name</strong>
-            </label>
-            <input
-              type="text"
-              placeholder="Enter Name"
-              autoComplete="off"
-              name="name"
-              className="form-control rounded-0"
-              onChange={(e) => setName(e.target.value)}
-              required
-            />
-          </div>
-          <div className="mb-3">
-            <label htmlFor="email">
-              <strong>Email</strong>
-            </label>
-            <input
-              type="email"
-              placeholder="Enter Email"
-              autoComplete="off"
-              name="email"
-              className="form-control rounded-0"
-              onChange={(e) => setEmail(e.target.value)}
-              required
-            />
-          </div>
-          <div className="mb-3">
-            <label htmlFor="password">
-              <strong>Password</strong>
-            </label>
-            <input
-              type="password"
-              placeholder="Enter Password"
-              name="password"
-              className="form-control rounded-0"
-              onChange={(e) => setPassword(e.target.value)}
-              required
-            />
-          </div>
-          <button type="submit" className="btn btn-success w-100 rounded-0">
+          <TextField
+            fullWidth
+            label="Name"
+            variant="outlined"
+            margin="normal"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            required
+          />
+          <TextField
+            fullWidth
+            label="Email"
+            type="email"
+            variant="outlined"
+            margin="normal"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+          />
+          <TextField
+            fullWidth
+            label="Password"
+            type="password"
+            variant="outlined"
+            margin="normal"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+          />
+          <Button
+            type="submit"
+            variant="contained"
+            color="primary"
+            fullWidth
+            style={{ marginTop: "16px",  backgroundColor: '#FF2625', color: '#fff' }}
+          >
             Register
-          </button>
+          </Button>
         </form>
-
-        <Link
-          to="/login"
-          className="btn btn-default border w-100 bg-light rounded-0 text-decoration-none"
-        >
-          Login
+        <Link to="/login" style={{ textDecoration: "none" }}>
+          <Button
+            variant="outlined"
+            color="primary"
+            fullWidth
+            style={{ marginTop: "16px" }}
+          >
+            Login
+          </Button>
         </Link>
-      </div>
-    </div>
+      </Box>
+    </Box>
   );
 }
 
