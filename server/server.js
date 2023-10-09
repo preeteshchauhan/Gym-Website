@@ -10,7 +10,7 @@ const app = express();
 app.use(express.json());
 app.use(cors({
   origin: "http://localhost:3000",
-  methods: ["GET", "POST"],
+  methods: ["GET", "POST", "PUT"],
   credentials: true,
 }));
 
@@ -79,6 +79,20 @@ app.post("/login", (req, res) => {
         return res.json("No record exists");
       }
     });
+});
+
+// Route for updating user profile
+app.put("/update-profile/:userId", verifyUser, async (req, res) => {
+  const { userId } = req.params;
+  const updatedUserData = req.body;
+
+  try {
+    const updatedUser = await UserModel.findByIdAndUpdate(userId, updatedUserData, { new: true });
+    return res.json({ Status: "Success", user: updatedUser });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ Status: "Error", message: "Failed to update user profile." });
+  }
 });
 
 // Start the server
