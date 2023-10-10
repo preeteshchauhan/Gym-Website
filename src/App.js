@@ -33,7 +33,7 @@ const App = () => {
         <Route path="/calculate-bmi" element={<BMICalculator />} />
       </Routes>
       <Footer />
-    </Box>
+    </Box>    
   );
 }
 

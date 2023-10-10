@@ -1,5 +1,13 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import {
+  Container,
+  Paper,
+  Typography,
+  TextField,
+  Button,
+  Box,
+} from "@mui/material";
 import axios from 'axios';
 
 function Login({ handleLogin }) {
@@ -7,7 +15,7 @@ function Login({ handleLogin }) {
     const [password, setPassword] = useState();
     const navigate = useNavigate();
 
-    axios.defaults.withCredentials = true;
+  axios.defaults.withCredentials = true;
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -25,46 +33,49 @@ function Login({ handleLogin }) {
             }).catch(err => console.log(err));
     };
 
-    return (
-        <div className="d-flex justify-content-center align-items-center bg-secondary vh-100" style={{ backgroundColor: '#ffa9a9' }}>
-            <div className="bg-white p-3 rounded w-25">
-                <h2>Login</h2>
-                <form onSubmit={handleSubmit}>
-                    <div className="mb-3">
-                        <label htmlFor="email">
-                            <strong>Email</strong>
-                        </label>
-                        <input
-                            type="email"
-                            placeholder="Enter Email"
-                            autoComplete="off"
-                            name="email"
-                            className="form-control rounded-0"
-                            onChange={(e) => setEmail(e.target.value)}
-                        />
-                    </div>
-                    <div className="mb-3">
-                        <label htmlFor="email">
-                            <strong>Password</strong>
-                        </label>
-                        <input
-                            type="password"
-                            placeholder="Enter Password"
-                            name="password"
-                            className="form-control rounded-0"
-                            onChange={(e) => setPassword(e.target.value)}
-                        />
-                    </div>
-                    <button type="submit" className="btn btn-success w-100 rounded-0">
-                        Login
-                    </button>
-                </form>
-                <Link to="/register" className="btn btn-default border w-100 bg-light rounded-0 text-decoration-none">
-                    Sign Up
-                </Link>
-            </div>
-        </div>
-    );
+  return (
+    <Container maxWidth="sm">
+      <Paper elevation={3} sx={{ padding: 5, marginTop: 8, marginBottom:10 }}>
+        <Typography variant="h4" align="center" gutterBottom>
+          Login
+        </Typography>
+        <form onSubmit={handleSubmit}>
+          <TextField
+            label="Email"
+            fullWidth
+            margin="normal"
+            variant="outlined"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+          <TextField
+            label="Password"
+            fullWidth
+            margin="normal"
+            variant="outlined"
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          <Box mt={2} mb={2}>
+            <Button
+              type="submit"
+              variant="contained"
+              style={{ backgroundColor: '#FF2625', color: '#fff' }}
+              fullWidth
+            >
+              Login
+            </Button>
+          </Box>
+        </form>
+        <Typography variant="body2" align="center" fontSize={20}>
+          Don't have an account?{" "}
+          <Link to="/signup">Sign Up</Link>
+        </Typography>
+      </Paper>
+    </Container>
+  );
 }
 
 export default Login;
+
