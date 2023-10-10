@@ -36,7 +36,7 @@ const Navbar = () => {
         fontFamily={{ lg: 'sans-serif', xs: 'sans-serif' }}
       >
         <Link
-          to="/"
+          to="/Home"
           style={{
             textDecoration: 'none',
             color: 'black',
@@ -54,13 +54,23 @@ const Navbar = () => {
           Exercises
         </a>
       </Stack>
+      
       <Stack direction="row" gap="20px">
+      <Button
+          variant="contained"
+          color="secondary"
+          component={Link}
+          to="/profile" // Link to the profile page
+          style={{ backgroundColor: '#FF2625', color: '#fff' }}
+        >
+          Your Profile
+        </Button>
         <Button
-          variant="outlined"
+          variant="contained"
           color="secondary"
           component={Link}
           to="/login"
-          style={{ color: '#FF2625' }}
+          style={{ backgroundColor: '#FF2625', color: '#fff' }}
         >
           Login
         </Button>
@@ -73,10 +83,11 @@ const Navbar = () => {
         >
           Signup
         </Button>
+        {/* Add Your Profile button */}
+       
       </Stack>
     </Box>
   );
 };
 
 export default Navbar;
-
