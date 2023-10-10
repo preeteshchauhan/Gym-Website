@@ -10,6 +10,7 @@ import Signup from './components/Signup';
 import Login from './components/Login';
 import HeroBanner from './components/HeroBanner';
 import BMICalculator from './components/BMICalculator';
+import AboutUs from './components/AboutUs';
 
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -31,6 +32,7 @@ const App = () => {
         <Route path="/signup" element={<Signup />} />
         <Route path="/login" element={<Login handleLogin={handleLogin} />} />
         <Route path="/calculate-bmi" element={<BMICalculator />} />
+        <Route path="/about-us" component={AboutUs} />
       </Routes>
       <Footer />
     </Box>    
