@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from 'axios';
 
-function Login() {
+function Login({ handleLogin }) {
     const [email, setEmail] = useState();
     const [password, setPassword] = useState();
     const navigate = useNavigate();
@@ -15,10 +15,11 @@ function Login() {
             .then(res => {
                 console.log("login: " + res.data);
                 if (res.data.Status === "Success") {
+                    handleLogin(); // Call the handleLogin function to set isLoggedIn to true
                     if (res.data.role === "admin") {
                         navigate('/dashboard');
                     } else {
-                        navigate('/');
+                        navigate('/Home'); // Navigate to the Home page after successful login
                     }
                 }
             }).catch(err => console.log(err));
